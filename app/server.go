@@ -26,7 +26,7 @@ func main() {
 		}
 		if conn != nil {
 			fmt.Println("connection was successful! Writing message...")
-			conn.Write([]byte("+PONG!\r\n"))
+			conn.Write([]byte("+PONG\r\n"))
 		}
 	}
 
