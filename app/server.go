@@ -18,16 +18,24 @@ func main() {
 		os.Exit(1)
 	}
 
+	conn, err := l.Accept()
+	if err != nil {
+		fmt.Println("Error accepting connection: ", err.Error())
+		os.Exit(1)
+	}
+
+	defer conn.Close()
+
+	buf := make([]byte, 1024)
+
 	for {
-		conn, err := l.Accept()
+		_, err := conn.Read(buf)
 		if err != nil {
-			fmt.Println("Error accepting connection: ", err.Error())
-			os.Exit(1)
+			fmt.Println("error receiving message from client!", err.Error())
 		}
-		if conn != nil {
-			fmt.Println("connection was successful! Writing message...")
-			conn.Write([]byte("+PONG\r\n"))
-		}
+		// fmt.Println(msg)
+		fmt.Println("connection was successful! Writing message...")
+		conn.Write([]byte("+PONG\r\n"))
 	}
 
 }
